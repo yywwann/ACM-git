@@ -21,29 +21,18 @@ ll read(){
     return x*f;
 }
 
-ll PowerMod(ll a,ll b,ll c){
-	ll ans = 1;
-	a = a % c;
-	while(b > 0){
-		if(b % 2 == 1) ans = (ans * a) % c;
-		b = b / 2;
-		a = (a * a) % c;
-	}
-	return ans;
-}
-
-ll n, cnt;
+ll n,x;
+ll a[105], b[105];
 
 int main(){
-	for(int _ = read(); _; _--){
-		n = read();
-		cnt = 0;
-		n--;
-		while(n){
-			if(n%2 == 1) cnt++;
-			n /= 2;
-		}
-		cout << PowerMod(2, cnt, MOD) << endl;
+	n = read(), x = read();
+	for(int i = 1; i <= n; i++) a[i] = read(), b[i] = read();
+	for(int i = n; i >= 1; i--){
+		if(a[i] == 1) x -= b[i];
+		if(a[i] == 2) x += b[i];
+		if(a[i] == 3) x /= b[i];
+		if(a[i] == 4) x *= b[i];
 	}
+	cout << x << endl;
 	return 0;
 }

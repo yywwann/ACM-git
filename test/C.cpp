@@ -13,7 +13,7 @@ using namespace std;            //   / ___| | | | | \ \ / /
 #define ll long long            //  | |     | |_| |  \ V /
 const ll INF = 0x3f3f3f3f;      //  | |___  |  _  |   | |
 const ll N   = 1e5+5;           //   \____| |_| |_|   |_|
-const ll MOD = 1e9+7;
+const ll MOD = 998244353;
 ll read(){
     ll x=0,f=1;char ch=getchar();
     while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
@@ -21,44 +21,32 @@ ll read(){
     return x*f;
 }
 
-int n;
-string s[N];
-int l[10*N], r[10*N], _0;
+int m;
+ll _2[105];
+
 int main(){
-	cin >> n;
-	for(int i = 1; i <= n; i++){
-		cin >> s[i];
-		stack<char>st;
-		for(int j = 0; j <s[i].size(); j++){
-			if(st.empty()){
-				st.push(s[i][j]);
-			}
-			else{
-				if(s[i][j] == ')' && st.top() == '(') st.pop();
-				else st.push(s[i][j]);
-			}
-		}
-		int len = 0;
-		if(st.empty()){
-			_0++;
-		}
-		else{
-			if(st.top() == '('){
-				len = st.size();
-				while(!st.empty() && st.top() == '(') st.pop();
-				if(st.empty()) l[len]++;
-			}
-			else{
-				len = st.size();
-				while(!st.empty() && st.top() == ')') st.pop();
-				if(st.empty()) r[len]++;
-			}
-		}
+	_2[1] = 3;
+	_2[0] = 1;
+	for(int i = 1; i <= 100; i++){
+		_2[i] = _2[i-1] * 3 % MOD;
+		//cout << i << ' ' << _2[i];
 	}
-	int ans = _0 / 2;
-	for(int i = 1; i <= 500000; i++){
-		ans += min(l[i], r[i]);
-	}
-	cout << ans << endl;
-	return 0;
+	m = read();
+	cout << _2[m] << endl;
+	// // m = read();
+	// // ll ans = 0;
+	// // for(int i = 0; i <=m ;i++){
+	// // 	ans = (ans + _2[i]) % MOD;
+	// // }
+	// // cout << ans << endl;
+	// for(int n = 0; n <= 10; n++){
+	// 	m = _2[n];
+	// 	ll ans = 0;
+	// 	for(int i = 0; i < m; i++){
+	// 		for(int j = 0; j < m; j++){
+	// 			if(i + j == (i | j)) ans++;
+	// 		}
+	// 	}
+	// 	cout << ans << ',';
+	// }
 }
