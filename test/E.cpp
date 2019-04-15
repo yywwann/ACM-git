@@ -1,124 +1,74 @@
-#include<cstdio>
-#include<cmath>
-#include<cstring>
-#include<string>
-#include<stack>
-#include<map>
-#include<set>
-#include<queue>
-#include<vector>
-#include<iostream>
-#include<algorithm>        		//    ____   _   _  __   __
-using namespace std;            //   / ___| | | | | \ \ / /
-#define ll long long            //  | |     | |_| |  \ V /
-const ll INF = 0x3f3f3f3f;      //  | |___  |  _  |   | |
-const ll N   = 1e5+5;           //   \____| |_| |_|   |_|
-const ll MOD = 1e9+7;
-ll read(){
-    ll x=0,f=1;char ch=getchar();
-    while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
-    while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
-    return x*f;
-}
+// #include<cstdio>
+// #include<cmath>
+// #include<cstring>
+// #include<string>
+// #include<stack>
+// #include<map>
+// #include<set>
+// #include<queue>
+// #include<vector>
+// #include<iostream>
+// #include<algorithm>
+// using namespace std;        //    ____   _   _  __   __
+// #define ll long long       //    / ___| | |_| | \ \ / /
+// const ll INF = 0x3f3f3f3f;//    | |     |  _  |  \ V /
+// const ll N   = 1e5+5;    //     | |___  | | | |   | |
+// const ll MOD = 1e9+7;   //       \____| |_| |_|   |_|
+// ll read() {
+//   ll x=0,f=1;char ch=getchar();
+//   while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
+//   while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
+//   return x*f;
+// }
+//
+//
+// int main(){
+//   for (int _ = read(); _; _--) {
+//
+//   }
+//   return 0;
+// }
 
-ll n, a, b;
-ll aa[N], pos[N];
-queue<int>q;
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+const int INF=2e9;
+const int SIZE=(1<<20);
+
+int d[20][20];
+int dp[SIZE][20];
+
 int main(){
-	n = read(); a = read(), b = read();
-	if(a > b) swap(a, b);
-	for(int i = 1; i <= n; i++){
-		aa[i] = read();
-		pos[aa[i]] = i;
-	}
 
-	ll l , r, L, R;
-	l = r = 0;
-	L = 1e6;
-	R = 0;
-	for(ll i = a; i <= b; i++){
-		q.push(i);
-		L = min(L, i);
-		R = max(R, i);
-	}
-	for(ll i = min(pos[a],pos[b]); i <= max(pos[a],pos[b]); i++){
-		if(aa[i] < L || aa[i] > R){
-			//q.push(aa[i]);
-			if(aa[i] < L){
-				for(int j = aa[i]; j < L; j++){
-					q.push(j);
-				}
-			}
-			else{
-				for(int j = R+1; j <= aa[i]; j++){
-					q.push(j);
-				}
-			}
-			L = min(L, aa[i]);
-			R = max(R, aa[i]);
-		}
-	}
+    int n;
+    scanf("%d",&n);
 
+    for(int i=0;i<n;i++)
+    for(int j=0;j<n;j++)
+    scanf("%d", &d[i][j]);
 
-	while(!q.empty()){
-		int t = q.front(); q.pop();
-		if(l == r && l == 0){
-			l = r = pos[t];
-		}
-		else{
-			int p = pos[t];
-			if(r < p){
-				for(int i = r+1; i <= p; i++){
-					if(aa[i] < L || aa[i] > R){
-						//q.push(aa[i]);
-						if(aa[i] < L){
-							for(int j = aa[i]; j < L; j++){
-								q.push(j);
-							}
-						}
-						else{
-							for(int j = R+1; j <= aa[i]; j++){
-								q.push(j);
-							}
-						}
-						L = min(L, aa[i]);
-						R = max(R, aa[i]);
-					}
-				}
+    for(int k=0;k<n;k++)
+    for(int i=0;i<n;i++)
+    for(int j=0;j<n;j++)
+    d[i][j]= min(d[i][j],d[i][k]+d[k][j]);
 
-				r = p;
-			}
-			else if(p < l){
-				for(int i = p; i <= l-1; i++){
-					if(aa[i] < L || aa[i] > R){
-						//q.push(aa[i]);
-						if(aa[i] < L){
-							for(int j = aa[i]; j < L; j++){
-								q.push(j);
-							}
-						}
-						else{
-							for(int j = R+1; j <= aa[i]; j++){
-								q.push(j);
-							}
-						}
-						L = min(L, aa[i]);
-						R = max(R, aa[i]);
-					}
-				}
-				l = p;
-			}
-			else{
+    for(int i=0;i<SIZE;++i)
+    for(int j=0;j<n;++j)
+    dp[i][j]=INF;
 
-			}
-		}
-	}
-	cout << l << ' ' << r << endl;
-	return 0;
+    dp[1][0]=0;
+    for(int k=1;k<SIZE;++k)
+    for(int i=0;i<n;++i)
+    for(int j=0;j<n;++j)
+    dp[k|(1<<i)|(1<<j)][i]= min(dp[k|(1<<i)|(1<<j)][i],d[j][i]+dp[k|(1<<j)][j]);
 
+    int ans=INF;
+    int tt=(1<<n)-1;
+    for(int i=0;i<n;i++)
+    if(ans>dp[tt][i]+d[i][0]) ans=dp[tt][i]+d[i][0];
+
+    printf("%d\n",ans);
+
+    return 0;
 }
-
-/*
-8 4 6
-5 4 3 6 1 2 7 8
-*/

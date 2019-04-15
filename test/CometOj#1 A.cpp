@@ -14,39 +14,39 @@ using namespace std;        //    ____   _   _  __   __
 const ll INF = 0x3f3f3f3f;//    | |     |  _  |  \ V /
 const ll N   = 1e5+5;    //     | |___  | | | |   | |
 const ll MOD = 1e9+7;   //       \____| |_| |_|   |_|
-ll read() {
+ll read(){
   ll x=0,f=1;char ch=getchar();
   while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
   while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
   return x*f;
 }
 
-map<pair<int,int>, int> mp[2];
-int n, m, x, y, ans, flg;
+int n, m;
+string s;
 
 int main(){
-  for (int _ = read(); _; _--) {
-      n = read();
-      flg = 0;
-      ans = 0;
-      for (int i = 1; i <= n; i++) {
-        m = read();
-        mp[flg].clear();
-        for (int j = 1; j <= m; j++) {
-          x = read(), y = read();
-          pair<int, int> p = make_pair(x, y);
-          if (mp[flg^1].count(p)) {
-            int t = mp[flg^1][p] + 1;
-            mp[flg][p] = t;
-            ans = max(ans, t);
-          } else {
-            mp[flg][p] = 1;
-            ans = max(ans, 1);
-          }
+	for (int _ = read(); _; _--) {
+    n = read(), m = read();
+    int x, y, len;
+    len = 0;
+    for (int i = 1; i <= n; i++) {
+      cin >> s;
+      int tlen, tx, ty;
+      tlen = tx = ty = 0;
+      for (int j = 0; j < s.size(); j++) {
+        if (s[j] == '.') {
+          tlen++;
+          tx = i;
+          ty = j + 1;
         }
-        flg ^= 1;
       }
-      cout << ans << endl;
-  }
-  return 0;
+      if (tlen > len) {
+        len = tlen;
+        x = tx;
+        y = ty;
+      }
+    }
+    cout << len / 2 << ' ' << x << ' ' << y - len / 2 << endl;
+	}
+	return 0;
 }
