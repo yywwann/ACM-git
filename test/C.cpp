@@ -21,54 +21,10 @@ ll read() {
   return x*f;
 }
 
-ll n, a[N];
-
-int check(ll x) {
-  for (int i = 1; i <= n; i++) {
-    //cout << a[i] << ' ' << x << endl;
-    if (a[i] > x) {
-      x -= a[i] - x;
-    } else {
-      x += x - a[i];
-    }
-    //cout << a[i] << ' ' << x << endl;
-    if (x <= 0) return false;
-  }
-  return true;
-}
 
 int main(){
-  for (int _ = 1; _; _--) {
-    n = read();
-    for (int i = 1; i <= n; i++) {
-      a[i] = read();
-    }
-    ll l = 1, r = 1e5, ans = 1e5;
-    // while (l+1<r) {
-    //   ll mid = (l + r) / 2;
-    //   //cout << l << ' ' << r << ' ' << mid << endl;
-    //   if (check(mid)) {
-    //     //cout << "YES" << endl;
-    //     ans = min(ans, mid);
-    //     r = mid + 1;
-    //   } else {
-    //     //cout << "NO" << endl;
-    //     l = mid;
-    //   }
-    // }
-    for (int i = 1; i <= 50; i++) {
-      ll mid = (l + r) / 2;
-      //cout << l << ' ' << r << ' ' << mid << endl;
-      if (check(mid)) {
-        //cout << "YES" << endl;
-        ans = min(ans, mid);
-        r = mid + 1;
-      } else {
-        //cout << "NO" << endl;
-        l = mid - 1;
-      }
-    }
-    cout << ans << endl;
+  for (int _ = read(); _; _--) {
+
   }
   return 0;
 }

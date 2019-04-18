@@ -1,17 +1,30 @@
-#include <bits/stdc++.h>
-#define INF 0x3f3f3f3f
-#define ll long long
-using namespace std;
-const ll N=500010;
-ll n,p;
-ll high[N],sum[N];
-int main() {
-    cin >> n >> p;
-    for(int i = 1; i <= n; i++) cin >> high[i];
-    sort(high + 1, high + 1 + n);
-    for(int i = 1; i <= n; i++) sum[i] = sum[i-1] + high[i];
-    ll res = INF;
-    for(int i = p; i <= n; i++) res = min(res, p * high[i] - (sum[i] - sum[i-p]));
-    cout << res << endl;
-    return 0;
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+#include<string>
+#include<stack>
+#include<map>
+#include<set>
+#include<queue>
+#include<vector>
+#include<iostream>
+#include<algorithm>
+using namespace std;        //    ____   _   _  __   __
+#define ll long long       //    / ___| | |_| | \ \ / /
+const ll INF = 0x3f3f3f3f;//    | |     |  _  |  \ V /
+const ll N   = 1e5+5;    //     | |___  | | | |   | |
+const ll MOD = 1e9+7;   //       \____| |_| |_|   |_|
+ll read() {
+  ll x=0,f=1;char ch=getchar();
+  while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
+  while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
+  return x*f;
+}
+
+
+int main(){
+  for (int _ = read(); _; _--) {
+
+  }
+  return 0;
 }
