@@ -21,10 +21,23 @@ ll read() {
   return x*f;
 }
 
+int n;
+ll a[105], b[105];
 
 int main(){
   for (int _ = read(); _; _--) {
-
+    n = read();
+    for (int i = 1; i <= n; i++) a[i] = read();
+    for (int i = 1; i <= n; i++) b[i] = read();
+    ll t = 0;
+    for (int i = n; i >= 1; i--) {
+      if (b[i] + t >= a[i])  t = b[i] + t - a[i];
+      else {
+        t = -1; break;
+      }
+    }
+    if (t == -1) cout << "No" << endl;
+    else cout << "Yes" << endl;
   }
   return 0;
 }
