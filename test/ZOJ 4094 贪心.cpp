@@ -21,39 +21,23 @@ ll read() {
   return x*f;
 }
 
-char s[N], t[N];
-int nxt[N][26];
-int a[26];
 int n;
+ll a[105], b[105];
 
 int main(){
-  scanf("%s", s);
-  int lens = strlen(s);
-  for (int i = 0; i < 26; i++) a[i] = -1;
-  for (int i = lens-1; i >= 0 ; i--) {
-    for (int j = 0; j < 26; j++) {
-      nxt[i][j] = a[j];
-    }
-    int idx = s[i] - 'a';
-    a[idx] = i;
-  }
-  cin >> n;
-  while (n--) {
-    scanf("%s", t);
-    int lent = strlen(t);
-    bool flg = true;
-    for (int i = 0, j = 0; i < lent && flg; i++) {
-      int idx = t[i] - 'a';
-      if (i == 0) {
-        if (a[idx] == -1) flg = false;
-        else j = a[idx];
-      } else {
-        if (nxt[j][idx] == -1) flg = false;
-        else j = nxt[j][idx];
+  for (int _ = read(); _; _--) {
+    n = read();
+    for (int i = 1; i <= n; i++) a[i] = read();
+    for (int i = 1; i <= n; i++) b[i] = read();
+    ll t = 0;
+    for (int i = n; i >= 1; i--) {
+      if (b[i] + t >= a[i])  t = b[i] + t - a[i];
+      else {
+        t = -1; break;
       }
     }
-    if (flg) printf("YES\n");
-    else printf("NO\n");
+    if (t == -1) cout << "No" << endl;
+    else cout << "Yes" << endl;
   }
   return 0;
 }

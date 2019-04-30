@@ -1,30 +1,42 @@
-#include<cstdio>
-#include<cmath>
-#include<cstring>
-#include<string>
-#include<stack>
-#include<map>
-#include<set>
-#include<queue>
-#include<vector>
+#include<stdio.h>
+#include<string.h>
 #include<iostream>
-#include<algorithm>
-using namespace std;        //    ____   _   _  __   __
-#define ll long long       //    / ___| | |_| | \ \ / /
-const ll INF = 0x3f3f3f3f;//    | |     |  _  |  \ V /
-const ll N   = 1e5+5;    //     | |___  | | | |   | |
-const ll MOD = 1e9+7;   //       \____| |_| |_|   |_|
-ll read() {
-  ll x=0,f=1;char ch=getchar();
-  while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
-  while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
-  return x*f;
+#include<vector>
+using namespace std;
+int n;
+vector<int>mp[150000];
+int color[150000];
+#define ll long long
+ll dp[150000][2];
+ll mod=1e9+7;
+void Dfs(int u,int from)
+{
+    if(color[u]==1)dp[u][1]=1;
+    else dp[u][0]=1;
+    for(int i=0;i<mp[u].size();i++)
+    {
+        int v=mp[u][i];
+        if(v == from) continue;
+        Dfs(v, u);
+        dp[u][1]=((dp[u][1]*(((dp[v][0]+dp[v][1]))%mod))%mod+(dp[u][0]*dp[v][1])%mod)%mod;
+        dp[u][0]=(dp[u][0]*((dp[v][0]+dp[v][1]))%mod)%mod;
+    }
 }
-
-
-int main(){
-  for (int _ = read(); _; _--) {
-
-  }
-  return 0;
+int main()
+{
+    while(~scanf("%d",&n))
+    {
+        memset(dp,0,sizeof(dp));
+        for(int i=1;i<=n;i++)mp[i].clear();
+        for(int i=2;i<=n;i++)
+        {
+            int x;scanf("%d",&x);
+            x++;
+            mp[x].push_back(i);
+            mp[i].push_back(x);
+        }
+        for(int i=1;i<=n;i++)scanf("%d",&color[i]);
+        Dfs(1,-1);
+        printf("%lld\n",dp[1][1]%mod);
+    }
 }
