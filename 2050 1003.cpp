@@ -1,24 +1,32 @@
-#include<cstdio>
-#include<cmath>
-#include<cstring>
-#include<string>
-#include<stack>
-#include<map>
-#include<set>
-#include<queue>
-#include<vector>
-#include<iostream>
-#include<algorithm>
-using namespace std;        //    ____   _   _  __   __
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <vector>
+using namespace std;       //    ____   _   _  __   __
 #define ll long long       //    / ___| | |_| | \ \ / /
-const ll INF = 0x3f3f3f3f;//    | |     |  _  |  \ V /
-const ll N   = 1e5+5;    //     | |___  | | | |   | |
-const ll MOD = 1e9+7;   //       \____| |_| |_|   |_|
+const ll INF = 0x3f3f3f3f; //    | |     |  _  |  \ V /
+const ll N = 1e5 + 5;      //     | |___  | | | |   | |
+const ll MOD = 1e9 + 7;    //       \____| |_| |_|   |_|
 ll read() {
-  ll x=0,f=1;char ch=getchar();
-  while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
-  while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
-  return x*f;
+  ll x = 0, f = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9') {
+    if (ch == '-')
+      f = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9') {
+    x = x * 10 + ch - '0';
+    ch = getchar();
+  }
+  return x * f;
 }
 
 ll n, m, k, a, b, c;
@@ -45,7 +53,8 @@ ll f1(ll boy, ll girl, ll fff) {
       boy = 0;
       ans += min(a, b);
     }
-    if (boy == 0) break;
+    if (boy == 0)
+      break;
     boy -= 2;
     ans += a;
   }
@@ -56,7 +65,7 @@ ll f1(ll boy, ll girl, ll fff) {
     } else if (girl == 5) {
       girl = 0;
       ans += min(2 * b, min(3 * a, a + b));
-    } else if (girl ==4) {
+    } else if (girl == 4) {
       girl = 0;
       ans += min(2 * b, min(2 * a, a + b));
     } else if (girl == 3) {
@@ -66,7 +75,8 @@ ll f1(ll boy, ll girl, ll fff) {
       girl = 0;
       ans += min(a, b);
     }
-    if (girl == 0) break;
+    if (girl == 0)
+      break;
     girl -= 2;
     ans += a;
   }
@@ -94,7 +104,8 @@ ll f2(ll boy, ll girl, ll fff) {
       boy = 0;
       ans += min(a, b);
     }
-    if (boy == 0) break;
+    if (boy == 0)
+      break;
     boy -= 3;
     ans += b;
   }
@@ -105,7 +116,7 @@ ll f2(ll boy, ll girl, ll fff) {
     } else if (girl == 5) {
       girl = 0;
       ans += min(2 * b, min(3 * a, a + b));
-    } else if (girl ==4) {
+    } else if (girl == 4) {
       girl = 0;
       ans += min(2 * b, min(2 * a, a + b));
     } else if (girl == 3) {
@@ -115,7 +126,8 @@ ll f2(ll boy, ll girl, ll fff) {
       girl = 0;
       ans += min(a, b);
     }
-    if (girl == 0) break;
+    if (girl == 0)
+      break;
     girl -= 3;
     ans += b;
   }
@@ -123,7 +135,7 @@ ll f2(ll boy, ll girl, ll fff) {
   return ans;
 }
 
-int main(){
+int main() {
   for (int _ = read(); _; _--) {
     cin >> n >> m >> k >> a >> b >> c;
     res = 2e18;

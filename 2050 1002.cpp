@@ -1,32 +1,39 @@
-#include<cstdio>
-#include<cmath>
-#include<cstring>
-#include<string>
-#include<stack>
-#include<map>
-#include<set>
-#include<queue>
-#include<vector>
-#include<iostream>
-#include<algorithm>
-using namespace std;        //    ____   _   _  __   __
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <vector>
+using namespace std;       //    ____   _   _  __   __
 #define ll long long       //    / ___| | |_| | \ \ / /
-const ll INF = 0x3f3f3f3f;//    | |     |  _  |  \ V /
-const ll N   = 5e6+5;    //     | |___  | | | |   | |
-const ll MOD = 1e9+7;   //       \____| |_| |_|   |_|
-ll read(){
-  ll x=0,f=1;char ch=getchar();
-  while(ch<'0'||ch>'9'){if(ch=='-')f=-1;ch=getchar();}
-  while(ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
-  return x*f;
+const ll INF = 0x3f3f3f3f; //    | |     |  _  |  \ V /
+const ll N = 5e6 + 5;      //     | |___  | | | |   | |
+const ll MOD = 1e9 + 7;    //       \____| |_| |_|   |_|
+ll read() {
+  ll x = 0, f = 1;
+  char ch = getchar();
+  while (ch < '0' || ch > '9') {
+    if (ch == '-')
+      f = -1;
+    ch = getchar();
+  }
+  while (ch >= '0' && ch <= '9') {
+    x = x * 10 + ch - '0';
+    ch = getchar();
+  }
+  return x * f;
 }
-
 
 string ss;
 char c;
 int h, m, s;
 
-int main(){
+int main() {
   int t;
   cin >> t;
   while (t--) {
@@ -37,11 +44,10 @@ int main(){
     ans %= 100;
     cout << ans << endl;
 
-    cout << (24 * 60 * 60 - )
+    cout << (24 * 60 * 60 -)
   }
   return 0;
 }
-
 
 /*
 
