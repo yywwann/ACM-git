@@ -1,31 +1,107 @@
-#include <bits/stdc++.h>
-using namespace std;       //     ____   _   _  __   __
-#define ll long long       //    / ___| | |_| | \ \ / /
-const ll INF = 0x3f3f3f3f; //   | |     |  _  |  \ V /
-const ll N = 1e5 + 5;      //   | |___  | | | |   | |
-const ll MOD = 1e9 + 7;    //    \____| |_| |_|   |_|
-ll read() {
-  ll x = 0, f = 1;
-  char ch = getchar();
-  while (ch < '0' || ch > '9') { if (ch == '-') f = -1; ch = getchar(); }
-  while (ch >= '0' && ch <= '9') { x = x * 10 + ch - '0'; ch = getchar(); }
-  return x * f;
+#include <iostream>
+#include<cstdio>
+#include<algorithm>
+#include<stack>
+#include<queue>
+#include<cstring>
+using namespace std;
+#define ll long long
+#define MOD 1000000007
+#define MAX 100000000005
+int xi[]={-1,0,1,0};
+int yi[]={0,-1,0,1};
+int m,n;
+struct cmp
+{
+    int x,y,juli;
+    cmp(int x, int y, int juli){
+      this->x = x;
+      this->y = y;
+      this->juli = juli;
+    }
+};
+deque<cmp>Q;
+int vis[505][505];
+char dp[505][505];
+void init()
+{
+    while(!Q.empty())
+    Q.pop_front();
+    memset(vis,0,sizeof(vis));
 }
-
-vector<ll>Fac;
-
-int main() {
-  for (int _ = 1; _; _--) {
-    Fac.push_back(1);
-    for (int i = 1; i <= 20; i++) {
-      Fac.push_back(Fac[i-1] * i);
+int cha(int x,int y)
+{
+    if(x<0||y<0||x>m-1||y>n-1||vis[x][y]==1)
+    return 0;
+    else
+    return 1;
+}
+int bfs(int x,int y)
+{
+    Q.push_back(cmp(x,y,0));
+    int i,xx,yy;
+    vis[x][y]=1;
+    while(!Q.empty())
+    {
+        cmp A=Q.front();
+        Q.pop_front();
+        for(i=0;i<4;i++)
+        {
+             xx=A.x+xi[i];
+             yy=A.y+yi[i];
+            if(cha(xx,yy)==1)
+            {
+                if(dp[xx][yy]=='I')
+                {
+                    if(A.juli==0)
+                    Q.push_front(cmp(xx,yy,A.juli));
+                    else
+                    return A.juli;
+                }
+                else if(dp[xx][yy]=='S')
+                Q.push_front(cmp(xx,yy,A.juli));
+                else
+                Q.push_back(cmp(xx,yy,A.juli+1));
+                vis[xx][yy]=1;
+            }
+        }
     }
-    for (int n = 1; n <= 20; n++) {
-      for (int i = 0; i <= n; i++) {
-        cout << Fac[n] / Fac[i] / Fac[n-i] << " ";
-      }
-      cout << endl;
+    return 0;
+}
+int main()
+{
+    int T;
+    while(cin>>T)
+    {
+        while(T--)
+        {
+            init();
+            int i,j,biaoji=0;
+             cin>>m>>n;
+             init();
+             for(i=0;i<m;i++)
+             {
+                for(j=0;j<n;j++)
+                 {
+                    cin>>dp[i][j];
+                 }
+             }
+             for(i=0;i<m;i++)
+             {
+                for(j=0;j<n;j++)
+                {
+                    if(dp[i][j]=='I'){
+                      cout<<bfs(i,j)<<endl;
+                      biaoji=1;
+                      break;
+                    }
+
+                }
+                if(biaoji==1)
+                break;
+             }
+
+        }
     }
-  }
-  return 0;
+    return 0;
 }
