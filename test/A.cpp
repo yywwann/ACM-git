@@ -1,107 +1,72 @@
-#include <iostream>
-#include<cstdio>
-#include<algorithm>
-#include<stack>
-#include<queue>
-#include<cstring>
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define MOD 1000000007
-#define MAX 100000000005
-int xi[]={-1,0,1,0};
-int yi[]={0,-1,0,1};
-int m,n;
-struct cmp
-{
-    int x,y,juli;
-    cmp(int x, int y, int juli){
-      this->x = x;
-      this->y = y;
-      this->juli = juli;
-    }
-};
-deque<cmp>Q;
-int vis[505][505];
-char dp[505][505];
-void init()
-{
-    while(!Q.empty())
-    Q.pop_front();
-    memset(vis,0,sizeof(vis));
-}
-int cha(int x,int y)
-{
-    if(x<0||y<0||x>m-1||y>n-1||vis[x][y]==1)
-    return 0;
-    else
-    return 1;
-}
-int bfs(int x,int y)
-{
-    Q.push_back(cmp(x,y,0));
-    int i,xx,yy;
-    vis[x][y]=1;
-    while(!Q.empty())
-    {
-        cmp A=Q.front();
-        Q.pop_front();
-        for(i=0;i<4;i++)
-        {
-             xx=A.x+xi[i];
-             yy=A.y+yi[i];
-            if(cha(xx,yy)==1)
-            {
-                if(dp[xx][yy]=='I')
-                {
-                    if(A.juli==0)
-                    Q.push_front(cmp(xx,yy,A.juli));
-                    else
-                    return A.juli;
-                }
-                else if(dp[xx][yy]=='S')
-                Q.push_front(cmp(xx,yy,A.juli));
-                else
-                Q.push_back(cmp(xx,yy,A.juli+1));
-                vis[xx][yy]=1;
-            }
-        }
-    }
-    return 0;
-}
-int main()
-{
-    int T;
-    while(cin>>T)
-    {
-        while(T--)
-        {
-            init();
-            int i,j,biaoji=0;
-             cin>>m>>n;
-             init();
-             for(i=0;i<m;i++)
-             {
-                for(j=0;j<n;j++)
-                 {
-                    cin>>dp[i][j];
-                 }
-             }
-             for(i=0;i<m;i++)
-             {
-                for(j=0;j<n;j++)
-                {
-                    if(dp[i][j]=='I'){
-                      cout<<bfs(i,j)<<endl;
-                      biaoji=1;
-                      break;
-                    }
+typedef pair<int, int> pii;
+const int maxn = 5e5 + 10, mod = 998244353;
+int n, a[maxn], b[maxn];
+pii tr[maxn];
+pii f[maxn], g[maxn];
+int qpow(int a, int b) {
+  int ans = 1, tmp = a;
 
-                }
-                if(biaoji==1)
-                break;
-             }
+  for (; b; b >>= 1, tmp = 1ll * tmp * tmp % mod)
+    if (b & 1) ans = 1ll * ans * tmp % mod;
+  return ans;
+}
 
-        }
+pii mer(pii a, pii b) {
+  if (a.first == b.first) return pii(a.first, (a.second + b.second) % mod);
+
+  return max(a, b);
+}
+
+void add(int x, pii a) {
+  for (; x <= n; x += x & -x) tr[x] = mer(tr[x], a);
+}
+
+pii qry(int x) {
+  pii a(0, 0);
+
+  for (; x; x -= x & -x) a = mer(a, tr[x]);
+  return a;
+}
+
+int main() {
+  scanf("%d", &n);
+
+  for (int i = 1; i <= n; ++i) {
+    scanf("%d", &a[i]);
+    b[i] = a[i];
+  }
+  sort(b + 1, b + n + 1);
+
+  for (int i = 1; i <= n; ++i) a[i] = lower_bound(b + 1, b + n + 1, a[i]) - b;
+  pii lis(0, 0);
+
+  for (int i = 1; i <= n; ++i) {
+    f[i] = pii(1, 1);
+    auto qf = qry(a[i] - 1);
+    f[i] = mer(f[i], pii(qf.first + 1, qf.second));
+    add(a[i], f[i]);
+    lis = mer(lis, f[i]);
+  }
+  memset(tr, 0, sizeof(tr));
+
+  for (int i = n; i >= 1; --i) {
+    g[i] = pii(1, 1);
+    auto qf = qry(n + 1 - a[i] - 1);
+    g[i] = mer(g[i], pii(qf.first + 1, qf.second));
+    add(n + 1 - a[i], g[i]);
+  }
+  int iv = qpow(lis.second, mod - 2);
+
+  for (int i = 1; i <= n; ++i) {
+    int ans = 0;
+
+    if (f[i].first + g[i].first - 1 != lis.first) {
+      ans = 0;
+    } else {
+      ans = 1ll * f[i].second * g[i].second % mod * iv % mod;
     }
-    return 0;
+    printf("%d ", ans);
+  }
 }

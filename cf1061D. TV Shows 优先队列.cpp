@@ -8,19 +8,25 @@ multiset<int>::iterator it;
 struct node {
   int x, y;
 } a[N];
-int cmp(node x, node y) { return x.y > y.y; }
+int cmp(node x, node y) {
+  return x.y > y.y;
+}
+
 signed main() {
   scanf("%lld%lld%lld", &n, &x, &y);
+
   for (int i = 1; i <= n; i++) {
     scanf("%lld%lld", &a[i].x, &a[i].y);
     (ans += x + y * (a[i].y - a[i].x) % M) %= M;
     s.insert(a[i].x);
   }
   sort(a + 1, a + 1 + n, cmp);
+
   for (int i = 1; i <= n; i++) {
     int t = a[i].y;
     it = s.upper_bound(t);
-    if (it != s.end() && y * (*it - t) < x) {
+
+    if ((it != s.end()) && (y * (*it - t) < x)) {
       (ans += y * (*it - t) % M + M - x) %= M;
       s.erase(it);
     }

@@ -12,18 +12,19 @@
 using namespace std;       //    ____   _   _  __   __
 #define ll long long       //    / ___| | |_| | \ \ / /
 const ll INF = 0x3f3f3f3f; //    | |     |  _  |  \ V /
-const ll N = 1e5 + 5;      //     | |___  | | | |   | |
+const ll N   = 1e5 + 5;    //     | |___  | | | |   | |
 const ll MOD = 1e9 + 7;    //       \____| |_| |_|   |_|
 ll read() {
-  ll x = 0, f = 1;
+  ll   x = 0, f = 1;
   char ch = getchar();
+
   while (ch < '0' || ch > '9') {
-    if (ch == '-')
-      f = -1;
+    if (ch == '-') f = -1;
     ch = getchar();
   }
+
   while (ch >= '0' && ch <= '9') {
-    x = x * 10 + ch - '0';
+    x  = x * 10 + ch - '0';
     ch = getchar();
   }
   return x * f;
@@ -35,29 +36,32 @@ ll res;
 
 ll f1(ll boy, ll girl, ll fff) {
   ll ans = 0;
+
   ans += fff * c;
+
   while (boy) {
     if (boy == 6) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * b, min(3 * a, 2 * a + b));
     } else if (boy == 5) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * b, min(3 * a, a + b));
     } else if (boy == 4) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * b, min(2 * a, a + b));
     } else if (boy == 3) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * a, b);
     } else if (boy <= 2) {
-      boy = 0;
+      boy  = 0;
       ans += min(a, b);
     }
-    if (boy == 0)
-      break;
+
+    if (boy == 0) break;
     boy -= 2;
     ans += a;
   }
+
   while (girl) {
     if (girl == 6) {
       girl = 0;
@@ -75,10 +79,10 @@ ll f1(ll boy, ll girl, ll fff) {
       girl = 0;
       ans += min(a, b);
     }
-    if (girl == 0)
-      break;
+
+    if (girl == 0) break;
     girl -= 2;
-    ans += a;
+    ans  += a;
   }
 
   return ans;
@@ -86,29 +90,32 @@ ll f1(ll boy, ll girl, ll fff) {
 
 ll f2(ll boy, ll girl, ll fff) {
   ll ans = 0;
+
   ans += fff * c;
+
   while (boy) {
     if (boy == 6) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * b, min(3 * a, 2 * a + b));
     } else if (boy == 5) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * b, min(3 * a, a + b));
     } else if (boy == 4) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * b, min(2 * a, a + b));
     } else if (boy == 3) {
-      boy = 0;
+      boy  = 0;
       ans += min(2 * a, b);
     } else if (boy <= 2) {
-      boy = 0;
+      boy  = 0;
       ans += min(a, b);
     }
-    if (boy == 0)
-      break;
+
+    if (boy == 0) break;
     boy -= 3;
     ans += b;
   }
+
   while (girl) {
     if (girl == 6) {
       girl = 0;
@@ -126,10 +133,10 @@ ll f2(ll boy, ll girl, ll fff) {
       girl = 0;
       ans += min(a, b);
     }
-    if (girl == 0)
-      break;
+
+    if (girl == 0) break;
     girl -= 3;
-    ans += b;
+    ans  += b;
   }
 
   return ans;
@@ -140,13 +147,15 @@ int main() {
     cin >> n >> m >> k >> a >> b >> c;
     res = 2e18;
     ll boy, girl, fff;
+
     for (int i = 0; i <= k; i++) {
-      boy = n + i;
+      boy  = n + i;
       girl = m + i;
-      fff = k - i;
-      res = min(res, min(f1(boy, girl, fff), f2(boy, girl, fff)));
+      fff  = k - i;
+      res  = min(res, min(f1(boy, girl, fff), f2(boy, girl, fff)));
     }
     cout << res << endl;
+
     // 0
     // boy = n + k;
     // girl = m + k;
