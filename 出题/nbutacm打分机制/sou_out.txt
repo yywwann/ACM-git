@@ -1,4 +1,0 @@
-<li><a href="#toc_1" class="nav-link js-scroll-trigger">A.小说知识科普</a></li>
-<li><a href="#toc_5" class="nav-link js-scroll-trigger">B.论WC串的唯一性</a></li>
-<li><a href="#toc_9" class="nav-link js-scroll-trigger">C.烤烤你1</a></li>
-<li><a href="#toc_12" class="nav-link js-scroll-trigger">D.烤烤你2</a></li>
