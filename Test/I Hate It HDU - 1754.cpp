@@ -1,11 +1,8 @@
-#include <stdio.h>
-#include <iostream>
-#include <algorithm>
-#include <cmath>
+#include <bits/stdc++.h>
 using namespace std;       //     ____   _   _  __   __
 #define ll long long       //    / ___| | |_| |   / /
 const ll INF = 0x3f3f3f3f; //   | |     |  _  |   V /
-const ll N   = 1e5 + 5;    //   | |___  | | | |   | |
+const ll N   = 2e5 + 5;    //   | |___  | | | |   | |
 const ll MOD = 1e9 + 7;    //    ____| |_| |_|   |_|
 ll read() {
   ll   x = 0, f = 1;
@@ -23,15 +20,14 @@ ll read() {
 
 struct segt {
   ll *a;
-  ll  MAX, MIN;
   struct Tree {
     int l, r;
     ll  sum, lz, max, min;
-    void update() {
-      sum = (ll)sqrt(sum);
+    void update(ll v) {
+      sum = v;
       lz  = 0;
-      max = 0;
-      min = 0;
+      max = v;
+      min = v;
     }
   } tree[N * 4];
 
@@ -46,11 +42,11 @@ struct segt {
   }
 
   void pushdown(int x) {
-    // if (tree[x].lz != 0) {
-    //   tree[2 * x].update(tree[x].lz);
-    //   tree[2 * x + 1].update(tree[x].lz);
-    //   tree[x].lz = 0;
-    // }
+    if (tree[x].lz != 0) {
+      tree[2 * x].update(tree[x].lz);
+      tree[2 * x + 1].update(tree[x].lz);
+      tree[x].lz = 0;
+    }
   }
 
   void build(int x, int l, int r) {
@@ -69,22 +65,20 @@ struct segt {
     pushup(x);
   }
 
-  void update(int x, int l, int r) {
+  void update(int x, int l, int r, ll c) {
     int L = tree[x].l, R = tree[x].r;
     int mid = (L + R) / 2;
 
-    if (tree[x].sum == (R - L + 1)) return;
-
-    if ((l <= L) && (r >= R) && (L == R)) {
-      tree[x].update();
+    if ((l <= L) && (r >= R)) {
+      tree[x].update(c);
       return;
     }
 
     pushdown(x);
 
-    if (l <= mid) update(2 * x, l, r);
+    if (l <= mid) update(2 * x, l, r, c);
 
-    if (r > mid) update(2 * x + 1, l, r);
+    if (r > mid) update(2 * x + 1, l, r, c);
     pushup(x);
   }
 
@@ -109,7 +103,7 @@ struct segt {
   ll queryMAX(int x, int l, int r) {
     int L = tree[x].l, R = tree[x].r;
     int mid = (L + R) / 2;
-    ll  res = -INF;
+    ll  res = 0;
 
     if ((l <= L) && (r >= R)) { // 要更新区间包括了该区间
       return tree[x].max;
@@ -127,7 +121,7 @@ struct segt {
   ll queryMIN(int x, int l, int r) {
     int L = tree[x].l, R = tree[x].r;
     int mid = (L + R) / 2;
-    ll  res = INF;
+    ll  res = 0;
 
     if ((l <= L) && (r >= R)) { // 要更新区间包括了该区间
       return tree[x].min;
@@ -141,54 +135,33 @@ struct segt {
     pushup(x);
     return res;
   }
-
-  void query(int x, int l, int r) {
-    int L = tree[x].l, R = tree[x].r;
-    int mid = (L + R) / 2;
-
-    if ((l <= L) && (r >= R)) { // 要更新区间包括了该区间
-      MAX = max(MAX, tree[x].max);
-      MIN = min(MIN, tree[x].min);
-      return;
-    }
-
-    pushdown(x);
-
-    if (l <= mid) query(2 * x, l, r);
-
-    if (r > mid) query(2 * x + 1, l, r);
-    pushup(x);
-  }
 } tree;
 
-int n, m, ope, l, r, v;
-ll  a[N], ans;
+int  n, m, l, r, v;
+ll   a[N], ans;
+char ope;
 
 int main() {
-  int CASE = 1;
-
   while (cin >> n) {
+    m = read();
+
     for (int i = 1; i <= n; i++) a[i] = read();
     tree.modify(a);
     tree.build(1, 1, n);
-    m = read();
-    printf("Case #%d:\n", CASE++);
 
     while (m--) {
-      ope = read();
-      l   = read();
-      r   = read();
+      cin >> ope;
 
-      if (l > r) swap(l, r);
-
-      if (ope == 0) {
-        tree.update(1, l, r);
+      if (ope == 'Q') {
+        l   = read(), r = read();
+        ans = tree.queryMAX(1, l, r);
+        printf("%lld\n", ans);
       }
       else {
-        printf("%lld\n", tree.querySUM(1, l, r));
+        l = read(), v = read();
+        tree.update(1, l, l, v);
       }
     }
-    printf("\n");
   }
   return 0;
 }
