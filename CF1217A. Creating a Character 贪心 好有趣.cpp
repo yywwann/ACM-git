@@ -18,7 +18,19 @@ ll read() {
   return x * f;
 }
 
+ll a, b, c;
+ll ans;
 int main() {
-  for (int _ = read(); _; _--) {}
+  for (int _ = read(); _; _--) {
+    a  = read(), b = read(), c = read();
+    a += c;
+
+    if (a > b) {
+      int t = (a + b - 1) / 2;
+      ans = min(c + 1, t - b + 1);
+    }
+    else ans = 0;
+    cout << ans << endl;
+  }
   return 0;
 }

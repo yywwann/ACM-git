@@ -18,7 +18,36 @@ ll read() {
   return x * f;
 }
 
+ll n, x;
+ll d[105], h[105], c[105];
+
 int main() {
-  for (int _ = read(); _; _--) {}
+  for (int _ = read(); _; _--) {
+    n = read(), x = read();
+
+    for (int i = 1; i <= n; i++) {
+      d[i] = read(), h[i] = read();
+      c[i] = d[i] - h[i];
+    }
+    sort(d + 1, d + 1 + n);
+
+    if (x <= d[n]) {
+      cout << 1 << endl;
+      continue;
+    }
+    sort(c + 1, c + 1 + n);
+
+    if (c[n] <= 0) {
+      cout << -1 << endl;
+      continue;
+    }
+    ll ans = 1;
+    x -= d[n];
+    ll t = x / c[n];
+
+    if (x % c[n] != 0) t++;
+    ans += t;
+    cout << ans << endl;
+  }
   return 0;
 }

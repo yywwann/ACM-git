@@ -1,61 +1,24 @@
 #include <bits/stdc++.h>
-using namespace std;
-const int MAXN = 100005;
-const long long mod = (long long)1e9 + 7;
-long long d1[MAXN], d2[MAXN], d3[MAXN]; // 1 id id2
-int n, m, T, type, pos;
-void pre_sum(long long a[])
-{
-  for (int i = 1; i <= n; ++i)
-  {
-    a[i] = (a[i] + a[i - 1]) % mod;
+using namespace std;       //     ____   _   _  __   __
+#define ll long long       //    / ___| | |_| |   / /
+const ll INF = 0x3f3f3f3f; //   | |     |  _  |   V /
+const ll N   = 1e5 + 5;    //   | |___  | | | |   | |
+const ll MOD = 1e9 + 7;    //    ____| |_| |_|   |_|
+ll read() {
+  ll   x = 0, f = 1;
+  char ch = getchar();
+
+  while (ch < '0' || ch > '9') {
+    if (ch == '-') f = -1; ch = getchar();
   }
+
+  while (ch >= '0' && ch <= '9') {
+    x = x * 10 + ch - '0'; ch = getchar();
+  }
+  return x * f;
 }
 
-int main()
-{
-  scanf("%d", &T);
-
-  while (T--)
-  {
-    memset(d1, 0, sizeof(d1));
-    memset(d2, 0, sizeof(d2));
-    memset(d3, 0, sizeof(d3));
-    scanf("%d %d", &n, &m);
-
-    while (m--)
-    {
-      scanf("%d %d", &type, &pos);
-
-      if (type == 1)
-      {
-        d1[pos]++;
-      }
-
-      if (type == 2)
-      {
-        d2[pos]++;
-      }
-
-      if (type == 3)
-      {
-        d3[pos]++;
-        d3[pos + 1]++;
-      }
-    }
-    pre_sum(d1);
-
-    pre_sum(d2);
-    pre_sum(d2);
-
-    pre_sum(d3);
-    pre_sum(d3);
-    pre_sum(d3);
-
-    for (int i = 1; i <= n; ++i)
-    {
-      printf("%lld%c", (d1[i] + d2[i] + d3[i]) % mod, i == n ? '\n' : ' ');
-    }
-  }
+int main() {
+  for (int _ = read(); _; _--) {}
   return 0;
 }
