@@ -1,80 +1,52 @@
-#include <iostream>
-using namespace std;
+#include <bits/stdc++.h>
+using namespace std;       //     ____   _   _  __   __
+#define ll long long       //    / ___| | |_| |   / /
+const ll INF = 0x3f3f3f3f; //   | |     |  _  |   V /
+const ll N   = 1e5 + 5;    //   | |___  | | | |   | |
+const ll MOD = 1e9 + 7;    //    ____| |_| |_|   |_|
+ll read() {
+  ll   x = 0, f = 1;
+  char ch = getchar();
 
-struct node {
-  int   val;
-  node *pre, *next;
-};
+  while (ch < '0' || ch > '9') {
+    if (ch == '-') f = -1; ch = getchar();
+  }
 
-void look(node *t) {
-  cout << "look" << endl;
-  cout << "地址： " << &t << endl;
-  cout << "地址里的值： " << t << endl;
+  while (ch >= '0' && ch <= '9') {
+    x = x * 10 + ch - '0'; ch = getchar();
+  }
+  return x * f;
 }
 
-void init(node *& t) {
-  cout << "init" << endl;
-  cout << "地址： " << &t << endl;
-  cout << "地址里的值： " << t << endl;
-  cout << "new 一下" << endl;
-  t       = new node;
-  t->val  = 0;
-  t->next = NULL;
-  t->pre  = NULL;
-  cout << "地址： " << &t << endl;
-  cout << "地址里的值： " << t << endl;
-}
+ll n, a[N], b[N];
 
 int main() {
-  node *head = NULL;
+  for (int _ = read(); _; _--) {
+    n = read();
 
-  cout << "head的地址和值"  << endl;
-  cout << "地址： " << &head << endl;
-  cout << "地址里的值： " << head << endl;
-  look(head);
-  init(head);
-  look(head);
-}
+    for (int i = 1; i <= n; i++) a[i] = read();
 
-void del(node *& t) {
-  if (t != NULL) {
-    del(t->next);
-    delete t;
-    t = NULL;
+    for (int i = 1; i <= n; i++) b[i] = read();
+    int flg = 1;
+    int l = n + 1, r = -1;
+
+    for (int i = 1; i <= n; i++) {
+      if (a[i] != b[i]) {
+        l = min(l, i), r = max(r, i);
+      }
+    }
+
+    ll t = a[l] - b[l];
+
+    if (t > 0) flg = 0;
+
+    for (int i = l; i <= r; i++) {
+      if (a[i] - b[i] != t) flg = 0;
+    }
+
+
+    if (flg) cout << "YES" << endl;
+    else cout << "NO" << endl;
   }
-}
-
-void insert(node *t, int x) {
-  node *p = new node;
-
-  p->val  = x;
-  t->next = p;
-  p->pre  = t;
-  p->next = NULL;
-}
-
-void add(node *t, int x) {
-  t->val += x;
-}
-
-void print(node *head) {
-  node *p = head;
-
-  while (p != NULL) {
-    cout << p->val << endl;
-    p = p->next;
-  }
-}
-
-void init1(node *t) {
-  cout << "init" << endl;
-  cout << "地址： " << &t << endl;
-  cout << "地址里的值： " << t << endl;
-  cout << "new 一下" << endl;
-  t       = new node;
-  t->val  = 0;
-  t->next = NULL;
-  t->pre  = NULL;
-  cout << "地址： " << &t << endl;
-  cout << "地址里的值： " << t << endl;
+  return 0;
 }
