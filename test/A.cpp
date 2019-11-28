@@ -1,52 +1,76 @@
-#include <bits/stdc++.h>
-using namespace std;       //     ____   _   _  __   __
-#define ll long long       //    / ___| | |_| |   / /
-const ll INF = 0x3f3f3f3f; //   | |     |  _  |   V /
-const ll N   = 1e5 + 5;    //   | |___  | | | |   | |
-const ll MOD = 1e9 + 7;    //    ____| |_| |_|   |_|
-ll read() {
-  ll   x = 0, f = 1;
-  char ch = getchar();
-
-  while (ch < '0' || ch > '9') {
-    if (ch == '-') f = -1; ch = getchar();
+#include <iostream>
+#include <cstring>
+#include <string>
+using namespace std;
+int  L, R, C;
+int  ans, flag;
+int  vis[40][40][40];
+int  dx[] = { 0, 0, 1, -1, 0, 0 };
+int  dy[] = { 1, -1, 0, 0, 0, 0 };
+int  dz[] = { 0, 0, 0, 0, 1, -1 };
+char s[40][40][40];
+void dfs(int x, int y, int z)
+{
+  cout << x << " " << y << " " << z << endl;
+  vis[x][y][z] = 1;
+  if (s[x][y][z] == 'E')
+  {
+    cout << "Find" << endl;
+    flag = 1;
+    cout << x << " " << y << " " << z << endl;
+    return;
   }
-
-  while (ch >= '0' && ch <= '9') {
-    x = x * 10 + ch - '0'; ch = getchar();
+  for (int i = 0; i < 6; i++)
+  {
+    int nx = x + dx[i];
+    int ny = y + dy[i];
+    int nz = z + dz[i];
+    if ((nx >= 0) && (ny >= 0) && (nz >= 0) && (nx < L)
+        && (ny < R) && (nz < C) && (s[nx][ny][nz] == '.')
+        && (vis[nx][ny][nz] == 0))
+    {
+      cout << "QAQ" << endl;
+      dfs(nx, ny, nz);
+      ans++;
+    }
   }
-  return x * f;
 }
 
-ll n, a[N], b[N];
-
-int main() {
-  for (int _ = read(); _; _--) {
-    n = read();
-
-    for (int i = 1; i <= n; i++) a[i] = read();
-
-    for (int i = 1; i <= n; i++) b[i] = read();
-    int flg = 1;
-    int l = n + 1, r = -1;
-
-    for (int i = 1; i <= n; i++) {
-      if (a[i] != b[i]) {
-        l = min(l, i), r = max(r, i);
+int main()
+{
+  while (cin >> L >> R >> C)
+  {
+    flag = 0;
+    ans  = 0;
+    memset(vis, 0, sizeof(vis));
+    if ((L == 0) && (R == 0) && (C == 0)) break;
+    for (int i = 0; i < L; i++)
+    {
+      for (int j = 0; j < R; j++)
+      {
+        for (int z = 0; z < C; z++)
+        {
+          cin >> s[i][j][z];
+        }
       }
     }
-
-    ll t = a[l] - b[l];
-
-    if (t > 0) flg = 0;
-
-    for (int i = l; i <= r; i++) {
-      if (a[i] - b[i] != t) flg = 0;
+    for (int i = 0; i < L; i++)
+    {
+      for (int j = 0; j < R; j++)
+      {
+        for (int z = 0; z < C; z++)
+        {
+          if (s[i][j][z] == 'S')
+          {
+            cout << "QWQ" << endl;
+            ans++;
+            dfs(i, j, z);
+          }
+        }
+      }
     }
-
-
-    if (flg) cout << "YES" << endl;
-    else cout << "NO" << endl;
+    if (flag == 1) cout << "Escaped in " << ans << " minute(s)." << endl;
+    else cout << "Trapped!" << endl;
   }
   return 0;
 }
