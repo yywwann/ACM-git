@@ -11,7 +11,16 @@ ll read() {
   return x * f;
 }
 
+ll a[4];
+
 int main() {
-  for (int _ = read(); _; _--) {}
+  for (int _ = read(); _; _--) {
+    for (int i = 1; i <= 3; i++) a[i] = read();
+    sort(a + 1, a + 1 + 3);
+    if (a[1] + a[2] > a[3]) {
+      cout << (a[1] + a[2] + a[3]) / 2 << endl;
+    }
+    else cout << a[1] + a[2] << endl;
+  }
   return 0;
 }
