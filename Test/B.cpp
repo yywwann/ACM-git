@@ -17,7 +17,7 @@ int main() {
     long long k1, k2;
     for (int i = 0; i < t; i++) {
       k1 = lower_bound(a, a + t, b[i]) - a;
-      k2 = lower_bound(c, c + t, b[i]) - c;
+      k2 = upper_bound(c, c + t, b[i]) - c;
       if (b[i] == c[k2]) k2 = k2 + 1;
       ans = ans + (k1) * (t - k2);
     }
