@@ -1,26 +1,20 @@
-#include <iostream>
-#include <stdio.h>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-int main() {
-  int t;
-  int a[100005], b[100005], c[100005];
-  while (scanf("%d", &t) != EOF) {
-    long long ans = 0;
-    for (int i = 0; i < t; i++) scanf("%d", &a[i]);
-    sort(a, a + t);
-    for (int i = 0; i < t; i++) scanf("%d", &b[i]);
-    sort(b, b + t);
-    for (int i = 0; i < t; i++) scanf("%d", &c[i]);
-    sort(c, c + t);
+int n, t;
+int L, R, l, r;
 
-    long long k1, k2;
-    for (int i = 0; i < t; i++) {
-      k1 = lower_bound(a, a + t, b[i]) - a;
-      k2 = lower_bound(c, c + t, b[i]) - c;
-      if (b[i] == c[k2]) k2 = k2 + 1;
-      ans = ans + (k1) * (t - k2);
+int main() {
+  cin >> t;
+  while (t--) {
+    cin >> n;
+    L = -1, R = 1e9 + 5;
+    for (int i = 1; i <= n; i++) {
+      cin >> l >> r;
+      L = max(L, l);
+      R = min(R, r);
     }
-    printf("%lld\n", ans);
+    cout << max(0, L - R) << endl;
   }
+
+  return 0;
 }
