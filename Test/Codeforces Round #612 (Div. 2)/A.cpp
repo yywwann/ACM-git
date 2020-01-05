@@ -11,6 +11,21 @@ ll read() {
   return x * f;
 }
 
+ll n;
+string s;
+
 int main() {
+  for (int _ = read(); _; _--) {
+    n = read();
+    cin >> s;
+    ll ans = 0;
+    for (int i = 0; i < n; i++) {
+      ll t = 0;
+      for (int i = 0; i < n - 1; i++)
+        if ((s[i] == 'A') && (s[i + 1] == 'P')) t = 1, s[i + 1] = 'A', i++;
+      ans += t;
+    }
+    cout << ans << endl;
+  }
   return 0;
 }
