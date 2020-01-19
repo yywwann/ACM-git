@@ -20,8 +20,6 @@ struct node {
 } w[N];
 vector<int> g[N];
 
-
-
 int main() {
   n = read(), m = read(), k = read();
   for (int i = 1; i <= n; i++) {

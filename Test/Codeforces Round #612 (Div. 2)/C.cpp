@@ -14,28 +14,6 @@ ll read() {
 ll n, a[N], num[N], ans, b[105], dp[105][105][105][2];
 ll _1, _2;
 
-ll f(int x) {
-  ll __1 = _1, __2 = _2;
-  for (int i = 1; i <= n; i++) b[i] = a[i];
-  for (int i = 1; i <= n; i++) if (b[i] == 0) {
-      if ((x == 1) && (__1 > 0)) b[i] = 1, __1--;
-      else if (__2 > 0) b[i] = 2, __2--;
-      else b[i] = 1, __1--;
-    }
-  for (int i = 1; i <= n; i++) {
-    if (b[i] == 0) {
-      if ((b[i - 1] % 2 == 1) && (__1 > 0)) b[i] = 1, __1--;
-      else if (__2 > 0) b[i] = 2, __2--;
-      else b[i] = 1, __1--;
-    }
-  }
-  ll tans = 0;
-  for (int i = 2; i <= n; i++) {
-    if (b[i] % 2 != b[i - 1] % 2) tans++;
-  }
-  return tans;
-}
-
 int main() {
   n = read();
   for (int i = 1; i <= n; i++) a[i] = read(), num[a[i]] = 1;

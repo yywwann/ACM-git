@@ -11,39 +11,6 @@ ll read() {
   return x * f;
 }
 
-string s1, s2, ans;
-int pos1, pos2;
-
-void fun(int tpos, string s) {
-  int pos = 0;
-  for (int i = 0; i < ans.size(); i++) {
-    if (s[pos] == ans[i]) pos++;
-    else {
-      if (s[pos] == '(')
-    }
-  }
-}
-
 int main() {
-  cin >> s1 >> s2;
-  while (pos1 < s1.size() && pos2 < s2.size()) {
-    if (s1[pos1] == s2[pos2]) {
-      ans += s1[pos1];
-      pos1++, pos2++;
-    }
-    else {
-      if (s1[pos1] == '(') {
-        ans += s1[pos1];
-        pos1++;
-      }
-      else {
-        ans += s2[pos2];
-        pos2++;
-      }
-    }
-  }
-  if (pos1 < s1.size()) fun(pos1, s1);
-  else fun(pos2, s2);
-
   return 0;
 }
